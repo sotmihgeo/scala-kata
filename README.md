@@ -20,7 +20,7 @@ Ca și unelte ai nevoie de:
 
 - SBT, vezi [http://www.scala-sbt.org/download.html](http://www.scala-sbt.org/download.html)
 - Git, vezi [https://help.github.com/articles/set-up-git/](https://help.github.com/articles/set-up-git/)
-- un editor de text (de exemplu [Atom](https://atom.io/)) sau un IDE
+- un editor de texte (de exemplu [Atom](https://atom.io/)) sau un IDE
   (de exemplu [IntelliJ IDEA](https://www.jetbrains.com/idea/), Community Edition)
 
 Clonează proiectul local:
