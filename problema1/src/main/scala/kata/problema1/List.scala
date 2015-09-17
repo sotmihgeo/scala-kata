@@ -1,12 +1,31 @@
 package kata.problema1
 
+import scala.annotation.tailrec
+
 sealed trait List[+T] {
   /**
    * Dându-se o funcție de mapare de la valori de tip T la
    * valori de tip U, transformă Lista sursă într-o Listă
    * de elemente de tip U.
    */
-  def map[U](f: T => U): List[U] = ???
+  def map[U](f: T => U): List[U] = {
+    @tailrec def mapHelper(f: T => U, lT: List[T], lU: List[U]): List[U] = {
+	  lT match {
+	    /* case Cons(h, Nil) => Cons(f(h), lU) */
+		case Cons(h, t) => mapHelper(f, t, Cons(f(h), lU))
+	    case Nil => lU
+	  }
+	}
+	
+	mapHelper(f, this, Nil).reverse
+  
+    /*
+    this match {
+	  case Cons(h, t) => Cons(f(h), t.map(f))
+	  case Nil => Nil
+	}
+	*/
+  }
 
   /**
    * Dându-se o funcție ce mapează elemente de tip T
@@ -33,17 +52,26 @@ sealed trait List[+T] {
   /**
    * Returnează Lista sursă cu elementele în ordine inversă.
    */
-  def reverse: List[T] = ???
+  def reverse: List[T] = {
+    @tailrec def reverseHelper(l: List[T], lR: List[T]): List[T] = {
+	  l match {
+	    case Cons(h, t) => reverseHelper(t, Cons(h, lR))
+		case Nil => lR
+	  }
+	}
+	
+	reverseHelper(this, Nil)
+  }
 
   /**
    * Prefixează Lista sursă cu elementul dat.
    */
-  def ::[U >: T](head: U): List[U] = ???
+  def ::[U >: T](head: U): List[U] = Cons(head, this)
 
   /**
    * Prefixează Lista sursă cu elementul dat.
    */
-  def +:[U >: T](head: U): List[U] = ???
+  def +:[U >: T](head: U): List[U] = Cons(head, this)
 
   /**
    * Adaugă la sfârșit elementul dat.
