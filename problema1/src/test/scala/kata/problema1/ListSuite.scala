@@ -1,5 +1,6 @@
 package kata.problema1
 
+import scala.annotation.tailrec
 import minitest.SimpleTestSuite
 
 object ListSuite extends SimpleTestSuite {
@@ -200,5 +201,19 @@ object ListSuite extends SimpleTestSuite {
       case _: NotImplementedError =>
         ignore()
     }
+  }
+
+  def assertEquals[T](given: List[T], expected: List[T]): Unit = {
+    @tailrec
+    def loop(self: List[T], other: List[T]): Boolean =
+      if ((self eq Nil) || (other eq Nil)) self eq other
+      else {
+        val selfC = self.asInstanceOf[Cons[T]]
+        val otherC = other.asInstanceOf[Cons[T]]
+        if (selfC.head != otherC.head) false
+        else loop(selfC.tail, otherC.tail)
+      }
+
+    assert(loop(given, expected), s"equality failed")
   }
 }
